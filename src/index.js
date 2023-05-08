@@ -21,20 +21,22 @@ input.addEventListener(
 );
 
 function renderCountryList(countries) {
-  if (countries.length > 10) {
-    Notiflix.Notify.info(
-      'Too many matches found. Please enter a more specific name.'
-    );
-  } else if (countries.length > 1 && countrues.lenght < 10) {
+  if (countries.length >= 2 && countries.lenght <= 10) {
     const markup = countries
       .map(country => {
         return `<li>
-                    <p><img src=src=${country.flags.svg} width="30" height="30"/> ${country.name.official}</p>
-                    </li>`;
+                    <img src=${country.flags.svg} width="30" height="30"/><p>${country.name.official}</p>
+                </li>`
       })
-      .join('');
+      .join(' ');
     output.innerHTML = markup;
-  } else if (countries.length === 1) {
+  }
+  else if (countries.length > 10) {
+    Notiflix.Notify.info(
+      'Too many matches found. Please enter a more specific name.'
+    )
+  }
+   else if (countries.length === 1) {
     const add = countries
       .map(country => {
         return `<p><img src=${country.flags.svg} width="30" height="30" /></p>
