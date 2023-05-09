@@ -11,7 +11,7 @@ const countryInfo = document.querySelector('.country-info');
 input.addEventListener(
   'input',
   _.debounce(() => {
-    name = input.value.trim();
+   let name = input.value.trim();
     return fetchCountries(name)
       .then(countries => renderCountryList(countries))
       .catch(error => {
@@ -21,7 +21,7 @@ input.addEventListener(
 );
 
 function renderCountryList(countries) {
-  if (countries.length >= 2 && countries.lenght <= 10) {
+  if (countries.length >= 2 && countries.length <= 10) {
     const markup = countries
       .map(country => {
         return `<li>
