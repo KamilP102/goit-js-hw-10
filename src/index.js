@@ -21,7 +21,7 @@ input.addEventListener(
 );
 
 function renderCountryList(countries) {
-  if (countries.length >= 2 && countries.length <= 10) {
+  if (countries.length >= 2){
     const markup = countries
       .map(country => {
         return `<li>
