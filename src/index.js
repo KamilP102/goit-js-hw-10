@@ -7,6 +7,8 @@ import { fetchCountries } from './fetchCountries.js';
 const input = document.getElementById('search-box');
 const output = document.querySelector('.country-list');
 const countryInfo = document.querySelector('.country-info');
+const controller = new AbortController()
+const signal = controller.signal
 
 input.addEventListener(
   'input',
@@ -21,7 +23,12 @@ input.addEventListener(
 );
 
 function renderCountryList(countries) {
-  if (countries.length >= 2){
+  if (countries.length > 10) {
+    Notiflix.Notify.info(
+      'Too many matches found. Please enter a more specific name.'
+    )
+  }
+  else if (countries.length >= 2){
     const markup = countries
       .map(country => {
         return `<li>
@@ -29,25 +36,23 @@ function renderCountryList(countries) {
                 </li>`
       })
       .join(' ');
+    countryInfo.replaceChildren();
     output.innerHTML = markup;
-  }
-  else if (countries.length > 10) {
-    Notiflix.Notify.info(
-      'Too many matches found. Please enter a more specific name.'
-    )
   }
    else if (countries.length === 1) {
     const add = countries
       .map(country => {
         return `<p><img src=${country.flags.svg} width="30" height="30" /></p>
-            <p>${country.name.official}</p>
+             <p>${country.name.official}</p>
             <p>Population: ${country.population}</p>
             <p>Capital: ${country.capital}</p>
             <p>Languages: ${Object.values(country.languages)}</p>`;
       })
       .join(' ');
+      output.replaceChildren();
     countryInfo.innerHTML = add;
-  } else {
+  }
+   else {
     Notiflix.Notify.failure('Oops, there is no country with that name');
   }
-}
+};
